@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # uncomment tokens for assignment 2-4
-      # SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      # SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
-      # SONAR_ORG: ${{ secrets.SONAR_ORG }}
-      # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # auto-generated
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+      SONAR_ORG: ${{ secrets.SONAR_ORG }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # auto-generated
       HEROKU_KEY: ${{ secrets.HEROKU_API_KEY }}
       HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
       HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
@@ -29,7 +29,7 @@ jobs:
 
     # uncomment for assignment 2-4
     # - name: test the project and upload test report -> sonarqube
-    # run: ./gradlew test jacocoTestReport sonarqube -PsonarToken=$SONAR_TOKEN -PsonarProjectKey=$SONAR_PROJECT_KEY -PsonarOrganization=$SONAR_ORG
+    run: ./gradlew test jacocoTestReport sonarqube -PsonarToken=$SONAR_TOKEN -PsonarProjectKey=$SONAR_PROJECT_KEY -PsonarOrganization=$SONAR_ORG
 
     # https://devcenter.heroku.com/articles/authentication
     - name: create .netrc file for heroku authentication
@@ -50,4 +50,4 @@ jobs:
       run: heroku git:remote -a $HEROKU_APP_NAME
 
     - name: deploy project to heroku
-      run: git push heroku HEAD:refs/heads/master
+      run: git push -f heroku HEAD:refs/heads/master
