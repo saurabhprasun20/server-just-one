@@ -1,15 +1,15 @@
 package ch.uzh.ifi.seal.soprafs20.controller;
 
 import ch.uzh.ifi.seal.soprafs20.entity.User;
-import ch.uzh.ifi.seal.soprafs20.rest.dto.UserAuthDTO;
-import ch.uzh.ifi.seal.soprafs20.rest.dto.UserGetDTO;
-import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPostDTO;
-import ch.uzh.ifi.seal.soprafs20.rest.dto.UserUpdateDTO;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.*;
 import ch.uzh.ifi.seal.soprafs20.rest.mapper.DTOMapper;
 import ch.uzh.ifi.seal.soprafs20.service.UserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,21 +45,18 @@ public class UserController {
     @PostMapping("/user")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public UserGetDTO registerUser(@RequestBody UserPostDTO userPostDTO) {
-        // convert API user to internal representation
-        User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
-
-        // create user
-        User createdUser = userService.createUser(userInput);
-
-        // convert internal representation of user back to API
-        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);
+    public ResponseEntity registerUser(@RequestBody UserPostDTO userPostDTO) {
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .buildAndExpand("1")
+                .toUri();
+        return ResponseEntity.created(location).build();
     }
 
     @GetMapping("/user/{userId}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public UserGetDTO getUserByUserName(@RequestHeader("X-Auth-Token") String token, @PathVariable Long userId){
+    public UserGetDTO getUserById(@RequestHeader("X-Auth-Token") String token, @PathVariable Long userId){
         UserGetDTO userGetDTO = new UserGetDTO();
         return  userGetDTO;
 
@@ -73,7 +70,7 @@ public class UserController {
         return userAuthDTO;
     }
 
-    @PutMapping("/logout/{userId}")
+    @PutMapping("/user/{userId}/logout")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public void logout(@RequestHeader("X-Auth-Token") String token,@PathVariable Long userId){
@@ -96,11 +93,12 @@ public class UserController {
     }
 
     @PutMapping("/user/{userId}/invitation")
-    public List<Long> invitation(@RequestHeader("X-Auth-Token") String token,@PathVariable Long userId){
-
-        return new ArrayList<Long>();
+    @ResponseStatus(HttpStatus.OK)
+    public void invitation(@RequestHeader("X-Auth-Token") String token, @PathVariable Long userId, @RequestBody UserPutDTO userPutDTO){
+        return;
 
     }
+
 
 
 }

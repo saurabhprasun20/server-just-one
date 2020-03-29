@@ -2,6 +2,7 @@ package ch.uzh.ifi.seal.soprafs20.rest.dto;
 
 import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class UserGetDTO {
@@ -14,6 +15,14 @@ public class UserGetDTO {
     private int rank;
     private int score;
     private String token;
+    private char gender;
+    private String country;
+    private Date birthDay;
+    private Date creationDate;
+    private long gameId;
+    private long lobbyId;
+    private ArrayList<Long> invitations;
+
 
     public String getPassword() {
         return password;
@@ -72,14 +81,6 @@ public class UserGetDTO {
         this.country = country;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
     public Date getCreationDate() {
         return creationDate;
     }
@@ -90,6 +91,22 @@ public class UserGetDTO {
 
     public long getGameId() {
         return gameId;
+    }
+
+    public Date getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public ArrayList<Long> getInvitations() {
+        return invitations;
+    }
+
+    public void setInvitations(ArrayList<Long> invitations) {
+        this.invitations = invitations;
     }
 
     public void setGameId(long gameId) {
@@ -103,13 +120,6 @@ public class UserGetDTO {
     public void setLobbyId(long lobbyId) {
         this.lobbyId = lobbyId;
     }
-
-    private char gender;
-    private String country;
-    private Date birthDate;
-    private Date creationDate;
-    private long gameId;
-    private long lobbyId;
 
     public Long getId() {
         return id;

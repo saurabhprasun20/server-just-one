@@ -30,6 +30,15 @@ public interface DTOMapper {
     @Mapping(source = "status", target = "status")
     @Mapping(source = "rank", target ="rank")
     @Mapping(source = "score", target ="score")
+    @Mapping(source = "gender", target = "gender")
+    @Mapping(source = "country", target = "country")
+    @Mapping(source = "birthDay", target = "birthDay")
+    @Mapping(source = "token", target = "token")
+    @Mapping(source = "creationDate", target = "creationDate")
+    @Mapping(source = "password", target = "password")
+    @Mapping(source = "gameId", target = "gameId")
+    @Mapping(source = "lobbyId", target = "lobbyId")
+    @Mapping(source = "invitations", target = "invitations")
     UserGetDTO convertEntityToUserGetDTO(User user);
 
     @Mapping(source = "id", target = "id")
