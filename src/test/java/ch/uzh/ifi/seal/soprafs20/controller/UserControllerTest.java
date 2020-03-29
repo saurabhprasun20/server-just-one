@@ -55,7 +55,7 @@ public class UserControllerTest {
         given(userService.getUsers()).willReturn(allUsers);
 
         // when
-        MockHttpServletRequestBuilder getRequest = get("/users").contentType(MediaType.APPLICATION_JSON);
+        MockHttpServletRequestBuilder getRequest = get("/user").contentType(MediaType.APPLICATION_JSON);
 
         // then
         mockMvc.perform(getRequest).andExpect(status().isOk())
@@ -76,13 +76,13 @@ public class UserControllerTest {
         user.setStatus(UserStatus.ONLINE);
 
         UserPostDTO userPostDTO = new UserPostDTO();
-        userPostDTO.setUserName("Test User");
+        userPostDTO.setUsername("Test User");
         userPostDTO.setPassword("testUsername");
 
         given(userService.createUser(Mockito.any())).willReturn(user);
 
         // when/then -> do the request + validate the result
-        MockHttpServletRequestBuilder postRequest = post("/users")
+        MockHttpServletRequestBuilder postRequest = post("/user")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(userPostDTO));
 
@@ -109,7 +109,7 @@ public class UserControllerTest {
     @Test
     public void updateUser() throws Exception{
         User user = new User();
-        MockHttpServletRequestBuilder putRequest = put("/user/{userId}/edit")
+        MockHttpServletRequestBuilder putRequest = put("/user/101/edit")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(user))
                 .header("X-Auth-Token","supersecrettokenvalue");
@@ -119,7 +119,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void logput() throws Exception{
+    public void logout() throws Exception{
         MockHttpServletRequestBuilder putRequest = put("/logout/101")
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("X-Auth-Token","supersecrettokenvalue");

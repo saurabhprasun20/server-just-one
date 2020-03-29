@@ -164,8 +164,16 @@ public class User implements Serializable {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String userName) {
+        this.username = userName;
+    }
+
+    public ArrayList<Long> getInvitations() {
+        return invitations;
+    }
+
+    public void setInvitations(ArrayList<Long> invitations) {
+        this.invitations = invitations;
     }
 
     public String getToken() {

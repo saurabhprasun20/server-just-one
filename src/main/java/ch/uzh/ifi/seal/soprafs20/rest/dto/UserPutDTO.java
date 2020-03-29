@@ -2,16 +2,16 @@ package ch.uzh.ifi.seal.soprafs20.rest.dto;
 
 public class UserPutDTO {
 
-    private String name;
+    private String username;
     private String password;
     private long invitation;
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
