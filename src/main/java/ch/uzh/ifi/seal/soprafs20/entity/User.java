@@ -4,6 +4,9 @@ import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+
 
 /**
  * Internal User Representation
@@ -28,11 +31,118 @@ public class User implements Serializable {
     @Column(nullable = false, unique = true)
     private String username;
 
+    @Column(nullable = false)
+    private String password;
+
     @Column(nullable = false, unique = true)
     private String token;
 
     @Column(nullable = false)
     private UserStatus status;
+
+    @Basic
+    private ArrayList<Long> invitations;
+
+    @Column
+    private int rank;
+
+    @Column
+    private int score;
+
+    @Column
+    private char gender;
+
+    @Column
+    private String country;
+
+    @Column
+    private Date birthDay;
+
+    @Column(nullable = false)
+    private Date creationDate;
+
+    @Column
+    private long gameId;
+
+    @Column
+    private long lobbyId;
+
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public char getGender() {
+        return gender;
+    }
+
+    public void setGender(char gender) {
+        this.gender = gender;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public Date getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public long getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(long gameId) {
+        this.gameId = gameId;
+    }
+
+    public long getLobbyId() {
+        return lobbyId;
+    }
+
+    public void setLobbyId(long lobbyId) {
+        this.lobbyId = lobbyId;
+    }
 
     public Long getId() {
         return id;
@@ -54,8 +164,16 @@ public class User implements Serializable {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String userName) {
+        this.username = userName;
+    }
+
+    public ArrayList<Long> getInvitations() {
+        return invitations;
+    }
+
+    public void setInvitations(ArrayList<Long> invitations) {
+        this.invitations = invitations;
     }
 
     public String getToken() {

@@ -2,10 +2,7 @@ package ch.uzh.ifi.seal.soprafs20.rest.mapper;
 
 import ch.uzh.ifi.seal.soprafs20.entity.User;
 import ch.uzh.ifi.seal.soprafs20.entity.Game;
-import ch.uzh.ifi.seal.soprafs20.rest.dto.UserGetDTO;
-import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPostDTO;
-import ch.uzh.ifi.seal.soprafs20.rest.dto.GameGetDTO;
-import ch.uzh.ifi.seal.soprafs20.rest.dto.GamePostDTO;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.*;
 
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -23,14 +20,29 @@ public interface DTOMapper {
 
     DTOMapper INSTANCE = Mappers.getMapper(DTOMapper.class);
 
-    @Mapping(source = "name", target = "name")
     @Mapping(source = "username", target = "username")
+    @Mapping(source = "password", target = "password")
+    @Mapping(source = "name", target ="name")
+    @Mapping(source = "country", target = "country")
+    @Mapping(source = "birthday", target="birthDay")
+    @Mapping(source = "gender",target = "gender")
     User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "username", target = "username")
     @Mapping(source = "status", target = "status")
+    @Mapping(source = "rank", target ="rank")
+    @Mapping(source = "score", target ="score")
+    @Mapping(source = "gender", target = "gender")
+    @Mapping(source = "country", target = "country")
+    @Mapping(source = "birthDay", target = "birthDay")
+    @Mapping(source = "token", target = "token")
+    @Mapping(source = "creationDate", target = "creationDate")
+    @Mapping(source = "password", target = "password")
+    @Mapping(source = "gameId", target = "gameId")
+    @Mapping(source = "lobbyId", target = "lobbyId")
+    @Mapping(source = "invitations", target = "invitations")
     UserGetDTO convertEntityToUserGetDTO(User user);
 
     @Mapping(source = "id", target = "id")
@@ -44,5 +56,12 @@ public interface DTOMapper {
 
     @Mapping(source = "playerIds", target = "playerIds")
     Game convertGamePostDTOtoEntity(GamePostDTO gamePostDTO);
+
+    @Mapping(source = "username", target = "username")
+    @Mapping(source = "name", target = "name")
+    @Mapping(source = "gender", target = "gender")
+    @Mapping(source = "country", target = "country")
+    @Mapping(source = "birthDay", target = "birthDay")
+    UserUpdateDTO convertEntityToUserUpdateDTO(User user);
 
 }

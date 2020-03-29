@@ -2,7 +2,10 @@ package ch.uzh.ifi.seal.soprafs20.controller;
 
 import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.LobbyPostDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPostDTO;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPutDTO;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.UserUpdateDTO;
 import ch.uzh.ifi.seal.soprafs20.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,8 +26,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -43,57 +45,63 @@ public class UserControllerTest {
     private UserService userService;
 
     @Test
-    public void givenUsers_whenGetUsers_thenReturnJsonArray() throws Exception {
-        // given
-        User user = new User();
-        user.setName("Firstname Lastname");
-        user.setUsername("firstname@lastname");
-        user.setStatus(UserStatus.OFFLINE);
+    public void createUser() throws Exception {
+        UserPostDTO userPostDTO = new UserPostDTO();
 
-        List<User> allUsers = Collections.singletonList(user);
+        MockHttpServletRequestBuilder postRequest = post("/user")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(userPostDTO))
+                .header("X-Auth-Token","supersecrettokenvalue");
 
-        // this mocks the UserService -> we define above what the userService should return when getUsers() is called
-        given(userService.getUsers()).willReturn(allUsers);
-
-        // when
-        MockHttpServletRequestBuilder getRequest = get("/users").contentType(MediaType.APPLICATION_JSON);
-
-        // then
-        mockMvc.perform(getRequest).andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].name", is(user.getName())))
-                .andExpect(jsonPath("$[0].username", is(user.getUsername())))
-                .andExpect(jsonPath("$[0].status", is(user.getStatus().toString())));
+        mockMvc.perform(postRequest).andExpect(status().isCreated());
     }
 
+
     @Test
-    public void createUser_validInput_userCreated() throws Exception {
-        // given
-        User user = new User();
-        user.setId(1L);
-        user.setName("Test User");
-        user.setUsername("testUsername");
-        user.setToken("1");
-        user.setStatus(UserStatus.ONLINE);
-
+    public void login() throws Exception{
         UserPostDTO userPostDTO = new UserPostDTO();
-        userPostDTO.setName("Test User");
-        userPostDTO.setUsername("testUsername");
-
-        given(userService.createUser(Mockito.any())).willReturn(user);
-
-        // when/then -> do the request + validate the result
-        MockHttpServletRequestBuilder postRequest = post("/users")
+        MockHttpServletRequestBuilder getRequest = get("/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(userPostDTO));
 
-        // then
-        mockMvc.perform(postRequest)
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id", is(user.getId().intValue())))
-                .andExpect(jsonPath("$.name", is(user.getName())))
-                .andExpect(jsonPath("$.username", is(user.getUsername())))
-                .andExpect(jsonPath("$.status", is(user.getStatus().toString())));
+        mockMvc.perform(getRequest)
+                .andExpect(status().isAccepted());
+    }
+
+    @Test
+    public void updateUser() throws Exception{
+        UserUpdateDTO user = new UserUpdateDTO();
+        MockHttpServletRequestBuilder putRequest = put("/user/101/edit")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(user))
+                .header("X-Auth-Token","supersecrettokenvalue");
+
+        mockMvc.perform(putRequest)
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void logout() throws Exception{
+        MockHttpServletRequestBuilder putRequest = put("/user/101/logout")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("X-Auth-Token","supersecrettokenvalue");
+
+        mockMvc.perform(putRequest)
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void  invitation() throws Exception{
+        UserPutDTO userPutDTO = new UserPutDTO();
+
+        MockHttpServletRequestBuilder putRequest = put("/user/101/invitation")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(userPutDTO))
+                .header("X-Auth-Token","supersecrettokenvalue");
+
+        mockMvc.perform(putRequest)
+                .andExpect(status().isOk());
+
     }
 
     /**
