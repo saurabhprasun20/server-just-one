@@ -4,6 +4,7 @@ import ch.uzh.ifi.seal.soprafs20.entity.User;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserAuthDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserGetDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPostDTO;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.UserUpdateDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.mapper.DTOMapper;
 import ch.uzh.ifi.seal.soprafs20.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -68,7 +69,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
     public UserAuthDTO login(@RequestBody UserPostDTO userPostDTO){
-        UserAuthDTO userAuthDTO = new UserAuthDTO();
+        UserAuthDTO userAuthDTO = new UserAuthDTO("supersecrettokenvalue");
         return userAuthDTO;
     }
 
@@ -82,9 +83,9 @@ public class UserController {
     @PutMapping("/user/{userId}/edit")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public UserGetDTO updateUser(@RequestHeader("X-Auth-Token") String token,@RequestBody User user, @PathVariable Long userId){
-        UserGetDTO userGetDTO = new UserGetDTO();
-        return userGetDTO;
+    public UserUpdateDTO updateUser(@RequestHeader("X-Auth-Token") String token, @RequestBody User user, @PathVariable Long userId){
+        UserUpdateDTO userUpdateDTO = new UserUpdateDTO();
+        return userUpdateDTO;
     }
 
     @PutMapping("/user/{userId}/password")
