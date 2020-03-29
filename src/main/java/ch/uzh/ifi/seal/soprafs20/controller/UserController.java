@@ -80,17 +80,11 @@ public class UserController {
     @PutMapping("/user/{userId}/edit")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public UserUpdateDTO updateUser(@RequestHeader("X-Auth-Token") String token, @RequestBody User user, @PathVariable Long userId){
+    public UserUpdateDTO updateUser(@RequestHeader("X-Auth-Token") String token, @RequestBody UserUpdateDTO user, @PathVariable Long userId){
         UserUpdateDTO userUpdateDTO = new UserUpdateDTO();
         return userUpdateDTO;
     }
 
-    @PutMapping("/user/{userId}/password")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public void updatePassword(@RequestHeader("X-Auth-Token") String token,@RequestBody UserPostDTO userPostDTO){
-        return;
-    }
 
     @PutMapping("/user/{userId}/invitation")
     @ResponseStatus(HttpStatus.OK)

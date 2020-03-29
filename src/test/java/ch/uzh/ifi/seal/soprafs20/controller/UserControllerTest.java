@@ -5,6 +5,7 @@ import ch.uzh.ifi.seal.soprafs20.entity.User;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.LobbyPostDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPostDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPutDTO;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.UserUpdateDTO;
 import ch.uzh.ifi.seal.soprafs20.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -69,7 +70,7 @@ public class UserControllerTest {
 
     @Test
     public void updateUser() throws Exception{
-        User user = new User();
+        UserUpdateDTO user = new UserUpdateDTO();
         MockHttpServletRequestBuilder putRequest = put("/user/101/edit")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(user))
