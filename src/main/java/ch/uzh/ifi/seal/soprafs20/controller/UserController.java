@@ -25,7 +25,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/users")
+    @GetMapping("/user")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<UserGetDTO> getAllUsers() {
@@ -40,10 +40,10 @@ public class UserController {
         return userGetDTOs;
     }
 
-    @PostMapping("/users")
+    @PostMapping("/user")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public UserGetDTO createUser(@RequestBody UserPostDTO userPostDTO) {
+    public UserGetDTO registerUser(@RequestBody UserPostDTO userPostDTO) {
         // convert API user to internal representation
         User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
 
@@ -53,4 +53,52 @@ public class UserController {
         // convert internal representation of user back to API
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);
     }
+
+    @GetMapping("/user/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public UserGetDTO getUserByUserName(@RequestHeader("X-Auth-Token") String token, @PathVariable Long userId){
+        UserGetDTO userGetDTO = new UserGetDTO();
+        return  userGetDTO;
+
+    }
+
+    @GetMapping("/user/login")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseBody
+    public UserGetDTO login(@RequestBody UserPostDTO userPostDTO){
+        UserGetDTO userGetDTO = new UserGetDTO();
+        return userGetDTO;
+    }
+
+    @PutMapping("/logout/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void logout(@PathVariable Long userId){
+        return;
+    }
+
+    @PutMapping("/user/{userId}/edit")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public UserGetDTO updateUser(@RequestBody User user, @PathVariable Long userId){
+        UserGetDTO userGetDTO = new UserGetDTO();
+        return userGetDTO;
+    }
+
+    @PutMapping("/user/{userId}/password")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void updatePassword(@RequestBody UserPostDTO userPostDTO){
+        return;
+    }
+
+    @PutMapping("/user/{userId}/invitation")
+    public List<Long> invitation(@PathVariable Long userId){
+
+        return new ArrayList<Long>();
+
+    }
+
+
 }

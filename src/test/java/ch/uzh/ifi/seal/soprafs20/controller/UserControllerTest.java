@@ -23,8 +23,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -77,8 +76,8 @@ public class UserControllerTest {
         user.setStatus(UserStatus.ONLINE);
 
         UserPostDTO userPostDTO = new UserPostDTO();
-        userPostDTO.setName("Test User");
-        userPostDTO.setUsername("testUsername");
+        userPostDTO.setUserName("Test User");
+        userPostDTO.setPassword("testUsername");
 
         given(userService.createUser(Mockito.any())).willReturn(user);
 
@@ -94,6 +93,50 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.name", is(user.getName())))
                 .andExpect(jsonPath("$.username", is(user.getUsername())))
                 .andExpect(jsonPath("$.status", is(user.getStatus().toString())));
+    }
+
+    @Test
+    public void login() throws Exception{
+        UserPostDTO userPostDTO = new UserPostDTO();
+        MockHttpServletRequestBuilder getRequest = get("/user/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(userPostDTO));
+
+        mockMvc.perform(getRequest)
+                .andExpect(status().isAccepted());
+    }
+
+    @Test
+    public void updateUser() throws Exception{
+        User user = new User();
+        MockHttpServletRequestBuilder putRequest = put("/user/{userId}/edit")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(user))
+                .header("X-Auth-Token","supersecrettokenvalue");
+
+        mockMvc.perform(putRequest)
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void logput() throws Exception{
+        MockHttpServletRequestBuilder putRequest = put("/logout/101")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("X-Auth-Token","supersecrettokenvalue");
+
+        mockMvc.perform(putRequest)
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void  invitation() throws Exception{
+        MockHttpServletRequestBuilder putRequest = put("/user/101/invitation")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("X-Auth-Token","supersecrettokenvalue");
+
+        mockMvc.perform(putRequest)
+                .andExpect(status().isOk());
+
     }
 
     /**
