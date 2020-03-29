@@ -1,6 +1,7 @@
 package ch.uzh.ifi.seal.soprafs20.controller;
 
 import ch.uzh.ifi.seal.soprafs20.entity.User;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.UserAuthDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserGetDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPostDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.mapper.DTOMapper;
@@ -66,22 +67,22 @@ public class UserController {
     @GetMapping("/user/login")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
-    public UserGetDTO login(@RequestBody UserPostDTO userPostDTO){
-        UserGetDTO userGetDTO = new UserGetDTO();
-        return userGetDTO;
+    public UserAuthDTO login(@RequestBody UserPostDTO userPostDTO){
+        UserAuthDTO userAuthDTO = new UserAuthDTO();
+        return userAuthDTO;
     }
 
     @PutMapping("/logout/{userId}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public void logout(@PathVariable Long userId){
+    public void logout(@RequestHeader("X-Auth-Token") String token,@PathVariable Long userId){
         return;
     }
 
     @PutMapping("/user/{userId}/edit")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public UserGetDTO updateUser(@RequestBody User user, @PathVariable Long userId){
+    public UserGetDTO updateUser(@RequestHeader("X-Auth-Token") String token,@RequestBody User user, @PathVariable Long userId){
         UserGetDTO userGetDTO = new UserGetDTO();
         return userGetDTO;
     }
@@ -89,12 +90,12 @@ public class UserController {
     @PutMapping("/user/{userId}/password")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public void updatePassword(@RequestBody UserPostDTO userPostDTO){
+    public void updatePassword(@RequestHeader("X-Auth-Token") String token,@RequestBody UserPostDTO userPostDTO){
         return;
     }
 
     @PutMapping("/user/{userId}/invitation")
-    public List<Long> invitation(@PathVariable Long userId){
+    public List<Long> invitation(@RequestHeader("X-Auth-Token") String token,@PathVariable Long userId){
 
         return new ArrayList<Long>();
 
