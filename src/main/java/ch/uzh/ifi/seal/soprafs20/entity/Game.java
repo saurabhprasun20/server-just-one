@@ -5,6 +5,7 @@ import ch.uzh.ifi.seal.soprafs20.constant.GameStatus;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Internal Game Representation
@@ -23,8 +24,9 @@ public class Game implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @Basic
-    private ArrayList<Long> playerIds;
+    @Column()
+    @ElementCollection
+    private List<Long> playerIds = new ArrayList<Long>();
 
     @Column(nullable = false)
     private int round;
@@ -32,8 +34,9 @@ public class Game implements Serializable {
     @Column(nullable = false)
     private GameStatus gameStatus;
 
-    @Basic
-    private ArrayList<String> words;
+    @Column()
+    @ElementCollection
+    private List<String> words = new ArrayList<String>();
 
     @Column(nullable = false)
     private int wordIndex;
@@ -44,8 +47,9 @@ public class Game implements Serializable {
     @Column(nullable = false)
     private Long activePlayerId;
 
-    @Basic
-    private ArrayList<String> clues;
+    @Column()
+    @ElementCollection
+    private List<String> clues = new ArrayList<String>();
 
     @Column(nullable = false)
     private int timestamp;
@@ -58,11 +62,11 @@ public class Game implements Serializable {
         this.id = id;
     }
 
-    public ArrayList<Long> getPlayerIds() {
+    public List<Long> getPlayerIds() {
         return playerIds;
     }
 
-    public void setPlayerIds(ArrayList<Long> playerIds) {
+    public void setPlayerIds(List<Long> playerIds) {
         this.playerIds = playerIds;
     }
 
@@ -82,11 +86,11 @@ public class Game implements Serializable {
         this.gameStatus = gameStatus;
     }
 
-    public ArrayList<String> getWords() {
+    public List<String> getWords() {
         return words;
     }
 
-    public void setWords(ArrayList<String> words) {
+    public void setWords(List<String> words) {
         this.words = words;
     }
 
@@ -114,11 +118,11 @@ public class Game implements Serializable {
         this.activePlayerId = activePlayerId;
     }
 
-    public ArrayList<String> getClues() {
+    public List<String> getClues() {
         return clues;
     }
 
-    public void setClues(ArrayList<String> clues) {
+    public void setClues(List<String> clues) {
         this.clues = clues;
     }
 

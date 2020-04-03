@@ -3,6 +3,7 @@ package ch.uzh.ifi.seal.soprafs20.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Internal Lobby Representation
@@ -27,8 +28,9 @@ public class Lobby implements Serializable {
     @Column(nullable = false)
     private Long hostPlayerId;
 
-    @Basic
-    private ArrayList<Long> playerIds;
+    @Column()
+    @ElementCollection
+    private List<Long> playerIds = new ArrayList<Long>();
 
     @Column(nullable = false)
     private Long chatId;
@@ -60,11 +62,11 @@ public class Lobby implements Serializable {
         this.hostPlayerId = hostPlayerId;
     }
 
-    public ArrayList<Long> getPlayerIds() {
+    public List<Long> getPlayerIds() {
         return playerIds;
     }
 
-    public void setPlayerIds(ArrayList<Long> playerIds) {
+    public void setPlayerIds(List<Long> playerIds) {
         this.playerIds = playerIds;
     }
 

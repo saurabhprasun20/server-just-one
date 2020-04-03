@@ -1,12 +1,12 @@
 package ch.uzh.ifi.seal.soprafs20.rest.dto;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class LobbyPostDTO {
 
     private String name;
     private Long hostPlayerId;
-    private ArrayList<Long> playerIds;
+    private List<Long> playerIds;
 
     public String getName() {
         return name;
@@ -24,11 +24,11 @@ public class LobbyPostDTO {
         this.hostPlayerId = hostPlayerId;
     }
 
-    public ArrayList<Long> getPlayerIds() {
+    public List<Long> getPlayerIds() {
         return playerIds;
     }
 
-    public void setPlayerIds(ArrayList<Long> playerIds) {
+    public void setPlayerIds(List<Long> playerIds) {
         this.playerIds = playerIds;
     }
 }

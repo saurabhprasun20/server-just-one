@@ -1,16 +1,16 @@
 package ch.uzh.ifi.seal.soprafs20.rest.dto;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class GamePostDTO {
 
-    private ArrayList<Long> playerIds;
+    private List<Long> playerIds;
 
-    public ArrayList<Long> getPlayerIds() {
+    public List<Long> getPlayerIds() {
         return playerIds;
     }
 
-    public void setPlayerIds(ArrayList<Long> playerIds) {
+    public void setPlayerIds(List<Long> playerIds) {
         this.playerIds = playerIds;
     }
 }
