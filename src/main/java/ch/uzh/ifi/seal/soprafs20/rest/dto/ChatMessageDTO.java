@@ -1,8 +1,6 @@
 package ch.uzh.ifi.seal.soprafs20.rest.dto;
 
 import ch.uzh.ifi.seal.soprafs20.constant.GameStatus;
-import java.util.ArrayList;
-
 
 public class ChatMessageDTO {
 
