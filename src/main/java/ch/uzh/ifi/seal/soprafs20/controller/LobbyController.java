@@ -65,17 +65,17 @@ public class LobbyController {
         return lobbyInfoDTO;
     }
 
-    @PutMapping("/lobby/{id}/{userId}")
+    @PutMapping("/lobby/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-     public void join(@RequestHeader("X-Auth-Token") String token, @PathVariable("id") long id, @PathVariable long userId) {
+     public void join(@RequestHeader("X-Auth-Token") String token, @PathVariable("id") long id, @RequestBody long userId) {
         lobbyService.addPlayerToLobby(id,userId);
     }
 
-    @DeleteMapping("/lobby/{id}/{userId}")
+    @DeleteMapping("/lobby/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public void removePlayer(@RequestHeader("X-Auth-Token") String token, @PathVariable("id") long id, @PathVariable long userId) {
+    public void removePlayer(@RequestHeader("X-Auth-Token") String token, @PathVariable("id") long id, @RequestBody long userId) {
         lobbyService.removePlayerFromLobby(id,userId);
     }
 

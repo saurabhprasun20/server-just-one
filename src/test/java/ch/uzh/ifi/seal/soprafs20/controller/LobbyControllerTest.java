@@ -71,8 +71,10 @@ public class LobbyControllerTest {
 
     @Test
     public void join() throws Exception {
-        MockHttpServletRequestBuilder putRequest = put("/lobby/1/1")
+        long userId=1;
+        MockHttpServletRequestBuilder putRequest = put("/lobby/1")
                 .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(userId))
                 .header("X-Auth-Token","supersecrettokenvalue");
 
         mockMvc.perform(putRequest)
@@ -81,8 +83,10 @@ public class LobbyControllerTest {
 
     @Test
     public void removePlayer() throws Exception {
-        MockHttpServletRequestBuilder deleteRequest = delete("/lobby/2/1")
+        long userId = 1;
+        MockHttpServletRequestBuilder deleteRequest = delete("/lobby/2")
                 .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(userId))
                 .header("X-Auth-Token","supersecrettokenvalue");
 
         mockMvc.perform(deleteRequest)
