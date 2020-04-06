@@ -2,18 +2,18 @@ package ch.uzh.ifi.seal.soprafs20.rest.dto;
 
 import ch.uzh.ifi.seal.soprafs20.constant.GameStatus;
 
-import java.util.ArrayList;
+import java.util.List;
 
 
 public class GameGetDTO {
 
     private Long id;
-    private ArrayList<Long> playerIds;
+    private List<Long> playerIds;
     private int round;
     private GameStatus gameStatus;
     private int score;
     private Long activePlayerId;
-    private ArrayList<String> clues;
+    private List<String> clues;
     private int timestamp;
 
     public Long getId() {
@@ -24,11 +24,11 @@ public class GameGetDTO {
         this.id = id;
     }
 
-    public ArrayList<Long> getPlayerIds() {
+    public List<Long> getPlayerIds() {
         return playerIds;
     }
 
-    public void setPlayerIds(ArrayList<Long> playerIds) {
+    public void setPlayerIds(List<Long> playerIds) {
         this.playerIds = playerIds;
     }
 
@@ -64,11 +64,11 @@ public class GameGetDTO {
         this.activePlayerId = activePlayerId;
     }
 
-    public ArrayList<String> getClues() {
+    public List<String> getClues() {
         return clues;
     }
 
-    public void setClues(ArrayList<String> clues) {
+    public void setClues(List<String> clues) {
         this.clues = clues;
     }
 

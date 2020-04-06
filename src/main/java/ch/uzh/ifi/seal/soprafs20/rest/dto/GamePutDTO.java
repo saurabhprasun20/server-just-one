@@ -1,7 +1,5 @@
 package ch.uzh.ifi.seal.soprafs20.rest.dto;
 
-import java.util.ArrayList;
-
 public class GamePutDTO {
 
     private int wordIndex;

@@ -30,7 +30,7 @@ public class Lobby implements Serializable {
 
     @Column()
     @ElementCollection
-    private List<Long> playerIds;
+    private List<Long> playerIds = new ArrayList<Long>();
 
     private Long chatId;
 

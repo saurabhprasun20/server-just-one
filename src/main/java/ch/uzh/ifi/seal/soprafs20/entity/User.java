@@ -5,6 +5,7 @@ import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
 import java.util.List;
 
@@ -42,7 +43,8 @@ public class User implements Serializable {
 
     @Column()
     @ElementCollection
-    private List<Long> invitations;
+
+    private List<Long> invitations = new ArrayList<Long>();
 
     @Column
     private int rank;

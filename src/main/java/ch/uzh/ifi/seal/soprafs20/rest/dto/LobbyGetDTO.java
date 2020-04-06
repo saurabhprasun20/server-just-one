@@ -1,6 +1,5 @@
 package ch.uzh.ifi.seal.soprafs20.rest.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LobbyGetDTO {

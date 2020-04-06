@@ -2,8 +2,10 @@ package ch.uzh.ifi.seal.soprafs20.service;
 
 
 import ch.uzh.ifi.seal.soprafs20.entity.Lobby;
+import ch.uzh.ifi.seal.soprafs20.entity.User;
 import ch.uzh.ifi.seal.soprafs20.exceptions.LobbyException;
 import ch.uzh.ifi.seal.soprafs20.repository.LobbyRepository;
+import ch.uzh.ifi.seal.soprafs20.repository.UserRepository;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.LobbyGetDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.mapper.DTOMapper;
 import org.slf4j.Logger;
@@ -31,15 +33,15 @@ public class LobbyService {
     private final Logger log = LoggerFactory.getLogger(LobbyService.class);
 
     private final LobbyRepository lobbyRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public LobbyService(@Qualifier("lobbyRepository") LobbyRepository lobbyRepository) {
+    public LobbyService(@Qualifier("lobbyRepository") LobbyRepository lobbyRepository, @Qualifier("userRepository") UserRepository userRepository) {
         this.lobbyRepository = lobbyRepository;
+        this.userRepository = userRepository;
     }
 
     public Lobby createLobby(Lobby newLobby){
-
-        log.info("****Here I am ***");
 
         checkIfLobbyExist(newLobby);
         lobbyRepository.save(newLobby);
@@ -78,9 +80,17 @@ public class LobbyService {
     public void addPlayerToLobby(long id, long userId){
         Lobby lobby = getLobby(id);
 
+        userRepository.findById(userId)
+                .orElseThrow(
+                        () -> new LobbyException(String.format("User with id: %d doesn't exist", userId))
+                );
         String baseErrorMessage = "The lobby cannot have more than 7 player. Please join different lobby";
         if(lobby.getPlayerIds().size()>=7){
-            throw new LobbyException(String.format(baseErrorMessage,id));
+            throw new LobbyException(baseErrorMessage);
+        }
+        if(lobby.getPlayerIds().contains(userId)){
+            baseErrorMessage = "Player already exists in the lobby";
+            throw new LobbyException(baseErrorMessage);
         }
         lobby.getPlayerIds().add(userId);
         saveOrUpdate(lobby);

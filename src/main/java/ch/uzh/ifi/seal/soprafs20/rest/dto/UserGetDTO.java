@@ -2,7 +2,7 @@ package ch.uzh.ifi.seal.soprafs20.rest.dto;
 
 import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
 
 public class UserGetDTO {
@@ -21,7 +21,7 @@ public class UserGetDTO {
     private Date creationDate;
     private long gameId;
     private long lobbyId;
-    private ArrayList<Long> invitations;
+    private List<Long> invitations;
 
 
     public String getPassword() {
@@ -101,11 +101,11 @@ public class UserGetDTO {
         this.birthDay = birthDay;
     }
 
-    public ArrayList<Long> getInvitations() {
+    public List<Long> getInvitations() {
         return invitations;
     }
 
-    public void setInvitations(ArrayList<Long> invitations) {
+    public void setInvitations(List<Long> invitations) {
         this.invitations = invitations;
     }
 
