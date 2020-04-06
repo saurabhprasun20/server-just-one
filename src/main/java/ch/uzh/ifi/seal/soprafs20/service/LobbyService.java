@@ -113,6 +113,10 @@ public class LobbyService {
     }
 
     public void checkIfLobbyExist(Lobby lobbyToBeCreated) {
+        /*
+        This method checks the uniqueness of the lobby by lobby name. If the lobby with the same name
+        exists then it should not be created.
+         */
         Lobby newLobby = lobbyRepository.findByName(lobbyToBeCreated.getName());
 
         String baseErrorMessage = "The provided %s is not unique. Therefore, the lobby could not be created!";
