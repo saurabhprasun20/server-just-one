@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * LobbyControllerTest
- * This is a WebMvcTest which allows to test the LobbyController i.e. GET/POST request without actually sending them over the network.
+ * This is a WebMvcTest which allows to test the LobbyController i.e. GET/POST/DELETE request without actually sending them over the network.
  * This tests if the LobbyController works.
  */
 @WebMvcTest(LobbyController.class)

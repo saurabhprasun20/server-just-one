@@ -80,14 +80,19 @@ public class LobbyService {
     public void addPlayerToLobby(long id, long userId){
         Lobby lobby = getLobby(id);
 
+        //Checking if the user exists before adding the user to lobby
         userRepository.findById(userId)
                 .orElseThrow(
                         () -> new LobbyException(String.format("User with id: %d doesn't exist", userId))
                 );
         String baseErrorMessage = "The lobby cannot have more than 7 player. Please join different lobby";
+
+        //Size of lobby is limited to maximum of 7 players.
         if(lobby.getPlayerIds().size()>=7){
             throw new LobbyException(baseErrorMessage);
         }
+
+        //Player should be unique in the lobby
         if(lobby.getPlayerIds().contains(userId)){
             baseErrorMessage = "Player already exists in the lobby";
             throw new LobbyException(baseErrorMessage);
