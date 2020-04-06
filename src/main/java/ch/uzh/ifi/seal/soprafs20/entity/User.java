@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -25,7 +26,6 @@ public class User implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false, unique = true)
@@ -40,8 +40,9 @@ public class User implements Serializable {
     @Column(nullable = false)
     private UserStatus status;
 
-    @Basic
-    private ArrayList<Long> invitations;
+    @Column()
+    @ElementCollection
+    private List<Long> invitations;
 
     @Column
     private int rank;
@@ -63,6 +64,27 @@ public class User implements Serializable {
 
     @Column
     private long gameId;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", token='" + token + '\'' +
+                ", status=" + status +
+                ", invitations=" + invitations +
+                ", rank=" + rank +
+                ", score=" + score +
+                ", gender=" + gender +
+                ", country='" + country + '\'' +
+                ", birthDay=" + birthDay +
+                ", creationDate=" + creationDate +
+                ", gameId=" + gameId +
+                ", lobbyId=" + lobbyId +
+                '}';
+    }
 
     @Column
     private long lobbyId;
@@ -168,11 +190,11 @@ public class User implements Serializable {
         this.username = userName;
     }
 
-    public ArrayList<Long> getInvitations() {
+    public List<Long> getInvitations() {
         return invitations;
     }
 
-    public void setInvitations(ArrayList<Long> invitations) {
+    public void setInvitations(List<Long> invitations) {
         this.invitations = invitations;
     }
 

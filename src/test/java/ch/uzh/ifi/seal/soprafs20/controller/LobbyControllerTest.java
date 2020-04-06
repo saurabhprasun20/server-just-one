@@ -4,6 +4,7 @@ import ch.uzh.ifi.seal.soprafs20.entity.Lobby;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.LobbyGetDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.LobbyPostDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.ChatMessageDTO;
+import ch.uzh.ifi.seal.soprafs20.service.LobbyService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -42,6 +43,9 @@ public class LobbyControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @MockBean
+    LobbyService lobbyService;
+
     @Test
     public void createLobby() throws Exception {
         LobbyPostDTO lobbyPostDTO = new LobbyPostDTO();
@@ -67,7 +71,7 @@ public class LobbyControllerTest {
 
     @Test
     public void join() throws Exception {
-        MockHttpServletRequestBuilder putRequest = put("/lobby/1")
+        MockHttpServletRequestBuilder putRequest = put("/lobby/1/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("X-Auth-Token","supersecrettokenvalue");
 
@@ -77,7 +81,7 @@ public class LobbyControllerTest {
 
     @Test
     public void removePlayer() throws Exception {
-        MockHttpServletRequestBuilder deleteRequest = delete("/lobby/1")
+        MockHttpServletRequestBuilder deleteRequest = delete("/lobby/2/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("X-Auth-Token","supersecrettokenvalue");
 

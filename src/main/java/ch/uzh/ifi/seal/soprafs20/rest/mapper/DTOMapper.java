@@ -1,5 +1,6 @@
 package ch.uzh.ifi.seal.soprafs20.rest.mapper;
 
+import ch.uzh.ifi.seal.soprafs20.entity.Lobby;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
 import ch.uzh.ifi.seal.soprafs20.entity.Game;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.*;
@@ -64,4 +65,15 @@ public interface DTOMapper {
     @Mapping(source = "birthDay", target = "birthDay")
     UserUpdateDTO convertEntityToUserUpdateDTO(User user);
 
+    @Mapping(source = "name", target = "name")
+    @Mapping(source = "hostPlayerId", target = "hostPlayerId")
+    @Mapping(source = "playerIds", target = "playerIds")
+    Lobby convertLobbyPostDTOToEntity(LobbyPostDTO lobbyPostDTO);
+
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "name", target = "name")
+    @Mapping(source = "gameId", target = "gameId")
+    @Mapping(source = "hostPlayerId", target = "hostPlayerId")
+    @Mapping(source = "playerIds", target = "playerIds")
+    LobbyGetDTO convertEntityToLobbyGetDTO(Lobby lobby);
 }
