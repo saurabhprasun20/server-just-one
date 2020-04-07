@@ -4,6 +4,7 @@ import ch.uzh.ifi.seal.soprafs20.entity.Lobby;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.LobbyGetDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.LobbyPostDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.ChatMessageDTO;
+import ch.uzh.ifi.seal.soprafs20.service.LobbyService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * LobbyControllerTest
- * This is a WebMvcTest which allows to test the LobbyController i.e. GET/POST request without actually sending them over the network.
+ * This is a WebMvcTest which allows to test the LobbyController i.e. GET/POST/DELETE request without actually sending them over the network.
  * This tests if the LobbyController works.
  */
 @WebMvcTest(LobbyController.class)
@@ -41,6 +42,9 @@ public class LobbyControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    LobbyService lobbyService;
 
     @Test
     public void createLobby() throws Exception {
@@ -67,8 +71,10 @@ public class LobbyControllerTest {
 
     @Test
     public void join() throws Exception {
+        long userId=1;
         MockHttpServletRequestBuilder putRequest = put("/lobby/1")
                 .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(userId))
                 .header("X-Auth-Token","supersecrettokenvalue");
 
         mockMvc.perform(putRequest)
@@ -77,8 +83,10 @@ public class LobbyControllerTest {
 
     @Test
     public void removePlayer() throws Exception {
-        MockHttpServletRequestBuilder deleteRequest = delete("/lobby/1")
+        long userId = 1;
+        MockHttpServletRequestBuilder deleteRequest = delete("/lobby/2")
                 .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(userId))
                 .header("X-Auth-Token","supersecrettokenvalue");
 
         mockMvc.perform(deleteRequest)

@@ -1,17 +1,22 @@
 package ch.uzh.ifi.seal.soprafs20.controller;
 
+import ch.uzh.ifi.seal.soprafs20.entity.Lobby;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.LobbyGetDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.LobbyPostDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.ChatMessageDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.mapper.DTOMapper;
+import ch.uzh.ifi.seal.soprafs20.service.LobbyService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.net.URI;
+import java.util.List;
+
 
 /**
  * Lobby Controller
@@ -21,12 +26,21 @@ import java.net.URI;
 @RestController
 public class LobbyController {
 
-    LobbyController() {
+    private final Logger log = LoggerFactory.getLogger(LobbyController.class);
+
+    private final LobbyService lobbyService;
+
+    LobbyController(LobbyService lobbyService) {
+        this.lobbyService = lobbyService;
     }
 
     @PostMapping("/lobby")
     public ResponseEntity createLobby(@RequestHeader("X-Auth-Token") String token, @RequestBody LobbyPostDTO lobbyPostDTO) {
         // FIXME expand to the created lobby's id
+        log.info("**********Inside the request*****");
+        Lobby lobby  = DTOMapper.INSTANCE.convertLobbyPostDTOToEntity(lobbyPostDTO);
+
+        lobby = lobbyService.createLobby(lobby);
         URI location = ServletUriComponentsBuilder
             .fromCurrentRequest()
             .buildAndExpand("1")
@@ -34,26 +48,35 @@ public class LobbyController {
         return ResponseEntity.created(location).build();
     }
 
+    @GetMapping("/lobby")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<LobbyGetDTO> getAllLobbies(@RequestHeader("X-Auth-Token") String token){
+        return this.lobbyService.getAllLobbies();
+    }
+
     @GetMapping("/lobby/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public LobbyGetDTO getLobbyInfo(@RequestHeader("X-Auth-Token") String token, @PathVariable("id") long id) {
-        LobbyGetDTO lobbyInfoDTO = new LobbyGetDTO();
+        Lobby lobby = lobbyService.getLobby(id);
+        LobbyGetDTO lobbyInfoDTO = DTOMapper.INSTANCE.convertEntityToLobbyGetDTO(lobby);
+
         return lobbyInfoDTO;
     }
 
     @PutMapping("/lobby/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-     public void join(@RequestHeader("X-Auth-Token") String token, @PathVariable("id") long id) {
-        return;
+     public void join(@RequestHeader("X-Auth-Token") String token, @PathVariable("id") long id, @RequestBody long userId) {
+        lobbyService.addPlayerToLobby(id,userId);
     }
 
     @DeleteMapping("/lobby/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public void removePlayer(@RequestHeader("X-Auth-Token") String token, @PathVariable("id") long id) {
-        return;
+    public void removePlayer(@RequestHeader("X-Auth-Token") String token, @PathVariable("id") long id, @RequestBody long userId) {
+        lobbyService.removePlayerFromLobby(id,userId);
     }
 
     @GetMapping("/lobby/{id}/chat")

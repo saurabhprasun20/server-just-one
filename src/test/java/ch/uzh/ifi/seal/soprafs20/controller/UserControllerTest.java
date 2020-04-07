@@ -46,12 +46,13 @@ public class UserControllerTest {
 
     @Test
     public void createUser() throws Exception {
-        UserPostDTO userPostDTO = new UserPostDTO();
+        User user = new User();
+        user.setUsername("Saurabh");
+        user.setPassword("1234");
 
         MockHttpServletRequestBuilder postRequest = post("/user")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(userPostDTO))
-                .header("X-Auth-Token","supersecrettokenvalue");
+                .content(asJsonString(user));
 
         mockMvc.perform(postRequest).andExpect(status().isCreated());
     }

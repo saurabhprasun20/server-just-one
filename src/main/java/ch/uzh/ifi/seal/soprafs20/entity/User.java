@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -26,7 +27,6 @@ public class User implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false, unique = true)
@@ -43,6 +43,7 @@ public class User implements Serializable {
 
     @Column()
     @ElementCollection
+
     private List<Long> invitations = new ArrayList<Long>();
 
     @Column
@@ -65,6 +66,27 @@ public class User implements Serializable {
 
     @Column
     private long gameId;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", token='" + token + '\'' +
+                ", status=" + status +
+                ", invitations=" + invitations +
+                ", rank=" + rank +
+                ", score=" + score +
+                ", gender=" + gender +
+                ", country='" + country + '\'' +
+                ", birthDay=" + birthDay +
+                ", creationDate=" + creationDate +
+                ", gameId=" + gameId +
+                ", lobbyId=" + lobbyId +
+                '}';
+    }
 
     @Column
     private long lobbyId;

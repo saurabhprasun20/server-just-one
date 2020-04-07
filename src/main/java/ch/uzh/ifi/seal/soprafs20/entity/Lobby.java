@@ -32,10 +32,8 @@ public class Lobby implements Serializable {
     @ElementCollection
     private List<Long> playerIds = new ArrayList<Long>();
 
-    @Column(nullable = false)
     private Long chatId;
 
-    @Column(nullable = false)
     private Long gameId;
 
     public Long getId() {
