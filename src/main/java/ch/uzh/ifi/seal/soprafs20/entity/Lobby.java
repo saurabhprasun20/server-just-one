@@ -32,9 +32,30 @@ public class Lobby implements Serializable {
     @ElementCollection
     private List<Long> playerIds = new ArrayList<Long>();
 
+    @Column
     private Long chatId;
 
+    @Column
     private Long gameId;
+
+    @Column
+    private int status;
+
+    public Long getHostPlayerId() {
+        return hostPlayerId;
+    }
+
+    public void setHostPlayerId(Long hostPlayerId) {
+        this.hostPlayerId = hostPlayerId;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public Long getId() {
         return id;

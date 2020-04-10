@@ -37,7 +37,6 @@ public class LobbyController {
     @PostMapping("/lobby")
     public ResponseEntity createLobby(@RequestHeader("X-Auth-Token") String token, @RequestBody LobbyPostDTO lobbyPostDTO) {
         // FIXME expand to the created lobby's id
-        log.info("**********Inside the request*****");
         Lobby lobby  = DTOMapper.INSTANCE.convertLobbyPostDTOToEntity(lobbyPostDTO);
 
         lobby = lobbyService.createLobby(lobby);
